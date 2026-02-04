@@ -47,12 +47,9 @@ fun IU(miViewModel: MiViewModel) {
 }
 
 @Composable
-fun cajaIntroduccionNombre() {
-    Text("INTRODUCE TU NOMBRE")
+fun nombreJugador(valorNombre: String) {
+    Text("NOMBRE DEL JUGADOR: $valorNombre")
 }
-
-@Composable
-
 
 @Composable
 fun Interfaz(miViewModel: MiViewModel) {
@@ -66,22 +63,27 @@ fun Interfaz(miViewModel: MiViewModel) {
             modifier = Modifier.padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Puntuacion(puntuacionObtenida, rondaObtenida, recordObtenido, estado)
+            Puntuacion(puntuacionObtenida, rondaObtenida, recordObtenido, estado, miViewModel)
             Botonera(miViewModel)
             Boton_Start(miViewModel)
-            Row {
-                cajaIntroduccionNombre()
-            }
+
         }
 
     }
 }
 
 @Composable
-fun Puntuacion(puntuacion: Int?, ronda: Int, record: Int, estados: Estados) {
+fun Puntuacion(
+    puntuacion: Int?,
+    ronda: Int,
+    record: Int,
+    estados: Estados,
+    miViewModel: MiViewModel
+) {
     Text(text = "Estado: $estados")
     Text(text = "Ronda: $ronda")
     Text(text = "Puntuacion: $puntuacion\n Record: $record")
+    nombreJugador(miViewModel.nombreJugador)
 }
 
 @Composable
