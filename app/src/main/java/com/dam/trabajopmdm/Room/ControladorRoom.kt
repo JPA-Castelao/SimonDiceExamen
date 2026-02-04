@@ -33,7 +33,6 @@ class ControladorRooms(private val applicationContext: Context) : InterfazRecord
             record.valorRecord = userByRecord.record!!
             record.fechaSuperacion = Date(userByRecord.fecha)
         }
-
         return record
     }
 
@@ -50,12 +49,10 @@ class ControladorRooms(private val applicationContext: Context) : InterfazRecord
                 valorData.toString()
             ) // INSERT INTO user (uid, record) VALUES (1, 12)
             userDao.insertAll(newUser)
-
             // Permite actualizar un usuario
             newUser.record = 15
             userDao.update(newUser)
             return 1
-
         } catch (a: Exception) {
             return -1
         }
