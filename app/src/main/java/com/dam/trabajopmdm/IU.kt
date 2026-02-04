@@ -48,7 +48,7 @@ fun IU(miViewModel: MiViewModel) {
 
 @Composable
 fun cajaIntroduccionNombre() {
-    Text("Introduce tu nombre")
+    Text("INTRODUCE TU NOMBRE")
 }
 
 @Composable
