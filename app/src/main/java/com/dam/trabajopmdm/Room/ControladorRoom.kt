@@ -22,6 +22,7 @@ class ControladorRooms(private val applicationContext: Context) : InterfazRecord
     // Permite acceder a los métodos del DAO
     val userDao = db.userDao()
 
+
     override fun obtenerRecord(context: Context): Record {
         // Busca usuarios por el record
         val userByRecord: User? =
