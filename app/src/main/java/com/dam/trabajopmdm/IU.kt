@@ -17,6 +17,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ComposableTargetMarker
 import androidx.compose.runtime.collectAsState
@@ -44,75 +46,94 @@ fun IU(miViewModel: MiViewModel) {
     Interfaz(miViewModel)
 }
 
-    @Composable
-    fun Interfaz(miViewModel: MiViewModel){
-        val puntuacionObtenida by miViewModel.puntuacion.collectAsState()
-        val rondaObtenida by miViewModel.ronda.collectAsState()
-        val recordObtenido by miViewModel.record.collectAsState()
-        val estado by miViewModel.estadoActual.collectAsState()
+@Composable
+fun nombreJugador(valorNombre: String) {
+    Text("NOMBRE DEL JUGADOR: $valorNombre")
+}
 
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
-            Column(modifier = Modifier.padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally){
-                Puntuacion(puntuacionObtenida, rondaObtenida, recordObtenido, estado)
-                Botonera(miViewModel)
-                Boton_Start(miViewModel)
-            }
-        }
-    }
+@Composable
+fun Interfaz(miViewModel: MiViewModel) {
+    val puntuacionObtenida by miViewModel.puntuacion.collectAsState()
+    val rondaObtenida by miViewModel.ronda.collectAsState()
+    val recordObtenido by miViewModel.record.collectAsState()
+    val estado by miViewModel.estadoActual.collectAsState()
 
-    @Composable
-    fun Puntuacion(puntuacion: Int?, ronda: Int,record: Int, estados: Estados){
-        Text(text="Estado: $estados")
-        Text(text="Ronda: $ronda")
-        Text(text="Puntuacion: $puntuacion\n Record: $record")
-    }
-    @Composable
-    fun Boton(miViewModel: MiViewModel, enum_color: Colores) {
-        val activo = miViewModel.estadoActual.collectAsState().value
-        Spacer(modifier = Modifier.size(10.dp))
-        Button(
-            enabled = activo.boton_activo,
-            colors = ButtonDefaults.buttonColors(enum_color.color),
-            onClick = {
-                Log.d("Juego", "Dentro del boton: ${enum_color.ordinal}")
-                Log.d("Juego", "Dentro del boton - Estado: ${activo.ordinal}")
-                miViewModel.corregirOpcion(enum_color.ordinal)
-            },
-            modifier = Modifier
-                .size((80).dp, (40).dp)
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = enum_color.txt, fontSize = 10.sp)
-        }
-    }
+            Puntuacion(puntuacionObtenida, rondaObtenida, recordObtenido, estado, miViewModel)
+            Botonera(miViewModel)
+            Boton_Start(miViewModel)
 
-    @Composable
-    fun Botonera(miViewModel: MiViewModel) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Row {
-                Boton(miViewModel, Colores.CLASE_ROJO)
-                Boton(miViewModel, Colores.CLASE_AZUL)
-            }
-            Row {
-                Boton(miViewModel, Colores.CLASE_AMARILLO)
-                Boton(miViewModel, Colores.CLASE_VERDE)
-            }
         }
-    }
 
-    @Composable
-    fun Boton_Start(miViewModel: MiViewModel) {
-        val estado = miViewModel.estadoActual.collectAsState().value
-        Button(
-            enabled = estado.start_activo,
-            onClick = {
-                Log.d("Juego", "Empieza la partida")
-                miViewModel.numeroRandom()
-            }) {
-            Text(text = "Start")
+    }
+}
+
+@Composable
+fun Puntuacion(
+    puntuacion: Int?,
+    ronda: Int,
+    record: Int,
+    estados: Estados,
+    miViewModel: MiViewModel
+) {
+    Text(text = "Estado: $estados")
+    Text(text = "Ronda: $ronda")
+    Text(text = "Puntuacion: $puntuacion\n Record: $record")
+    nombreJugador(miViewModel.nombreJugador)
+}
+
+@Composable
+fun Boton(miViewModel: MiViewModel, enum_color: Colores) {
+    val activo = miViewModel.estadoActual.collectAsState().value
+    Spacer(modifier = Modifier.size(10.dp))
+    Button(
+        enabled = activo.boton_activo,
+        colors = ButtonDefaults.buttonColors(enum_color.color),
+        onClick = {
+            Log.d("Juego", "Dentro del boton: ${enum_color.ordinal}")
+            Log.d("Juego", "Dentro del boton - Estado: ${activo.ordinal}")
+            miViewModel.corregirOpcion(enum_color.ordinal)
+        },
+        modifier = Modifier
+            .size((80).dp, (40).dp)
+    ) {
+        Text(text = enum_color.txt, fontSize = 10.sp)
+    }
+}
+
+@Composable
+fun Botonera(miViewModel: MiViewModel) {
+    Column(modifier = Modifier.padding(16.dp)) {
+        Row {
+            Boton(miViewModel, Colores.CLASE_ROJO)
+            Boton(miViewModel, Colores.CLASE_AZUL)
+        }
+        Row {
+            Boton(miViewModel, Colores.CLASE_AMARILLO)
+            Boton(miViewModel, Colores.CLASE_VERDE)
         }
     }
+}
+
+@Composable
+fun Boton_Start(miViewModel: MiViewModel) {
+    val estado = miViewModel.estadoActual.collectAsState().value
+    Button(
+        enabled = estado.start_activo,
+        onClick = {
+            Log.d("Juego", "Empieza la partida")
+            miViewModel.numeroRandom()
+        }) {
+        Text(text = "Start")
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
-fun IUPreview(){
+fun IUPreview() {
     IU(miViewModel = MiViewModel())
 }
