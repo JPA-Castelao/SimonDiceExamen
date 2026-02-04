@@ -45,6 +45,7 @@ fun IU(miViewModel: MiViewModel) {
 }
 
     @Composable
+
     fun Interfaz(miViewModel: MiViewModel){
         val puntuacionObtenida by miViewModel.puntuacion.collectAsState()
         val rondaObtenida by miViewModel.ronda.collectAsState()
