@@ -9,3 +9,4 @@ Programa funcionando en estado de INICIO:
 Programa funcionando al empezar la partida:
 
 ![SimonDice2.png](Images/SimonDice2.png)
+
